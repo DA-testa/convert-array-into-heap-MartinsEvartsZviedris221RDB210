@@ -1,59 +1,60 @@
-import os
+# python3
 
 def build_heap(data):
-    swaps = []
-    n = len(data)
-    for i in range(n//2, -1, -1):
-        sift_down(i, data, swaps)
+    
+    swaps=[]
+    
+    for i in range (len(data)-1,0,-1):
+        
+        parent=(i-1)//2
+        
+        
+        while i>0 and data[parent]>data[i]:
+            
+            data[parent],data[i]=data[i],data[parent]
+            swaps.append((parent,i))
+            i=parent
+            parent=(i-1)//2
     return swaps
 
-def sift_down(i, data, swaps):
-    n = len(data)
-    min_index = i
-    l = 2i + 1
-    if l < n and data[l] < data[min_index]:
-        min_index = l
-    r = 2i + 2
-    if r < n and data[r] < data[min_index]:
-        min_index = r
-    if i != min_index:
-        swaps.append((i, min_index))
-        data[i], data[min_index] = data[min_index], data[i]
-        sift_down(min_index, data, swaps)
-
 def main():
-    option = input("Enter input type: ")
-    data = []
+    
+    izvele=input()
+    if "F" in menu:
+        
+        Fpath=str(input())
+        with open("./tests/"+ Fpath,'r') as F:
+            
+            x=int(F.readline())
+            data=list(map(int, F.readline().split()))
+            
+    elif "I" in menu:
+      
+        x=int(input())
+        data=list(map(int, input() .split()))
+   
+    assert len (data) ==x
 
-    if "F" in option:
-        # input from file
-        try:
-            file_path = input("Input file path: ")
-            with open(f"tests/{file_path}", "r") as file:
-                n = int(file.readline().strip())
-                data = list(map(int, file.readline().strip().split()))
-        except FileNotFoundError:
-            print("File not found.")
-            return
-    elif "I" in option:
-        # input from keyboard
-        try:
-            n = int(input())
-            data = list(map(int, input().split()))
-        except ValueError:
-            print("Invalid input format.")
-            return
-    else:
-        print("Invalid input type.")
-        return
+  
+    swaps=build_heap(data)
 
-    assert len(data) == n
 
-    swaps = build_heap(data)
+    for i in range(len(data)):
+        
+        if 2i+1<len (data) and data[2i+1]<data [i]:
+            
+            return False
+        
+        if 2i+2<len(data) and data[2i+2]<data [i]:
+            
+            return False
+        
+    return True
+
     print(len(swaps))
-    for i, j in swaps:
-        print(i, j)
+    for x,y in swaps:
+        
+        print (x,y)
 
-
-if name == "main":
+if name== "main":
     main()
